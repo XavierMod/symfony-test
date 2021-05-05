@@ -4,11 +4,16 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\BlogPostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=BlogPostRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *      itemOperations={"get"},
+ *      collectionOperations={"get"}
+ * ) 
  */
 class BlogPost
 {
@@ -44,16 +49,22 @@ class BlogPost
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $slug;
-
+    
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\BlogPost", mappedBy="author")
-     */
-    private $posts;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="blogPost")
      */
     private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
 
     public function getId(): ?int
     {
@@ -101,16 +112,29 @@ class BlogPost
         return $this;
     }
 
-    public function setAuthor(string $author): self
+    public function setSlug(string $slug): self
     {
-        $this->author = $author;
+        $this->slug = $slug;
 
         return $this;
     }
 
-    public function setSlug(string $slug): self
+    /**
+     * @return User
+     */
+
+    public function getAuthor(): User
     {
-        $this->slug = $slug;
+        return $this->author;
+    }
+
+    /**
+     * @return User $author
+     */
+
+    public function setAuthor(User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

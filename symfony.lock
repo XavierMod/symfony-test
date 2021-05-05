@@ -123,6 +123,9 @@
             "ref": "b131e6cbfe1b898a508987851963fff485986285"
         }
     },
+    "fakerphp/faker": {
+        "version": "v1.14.1"
+    },
     "fig/link-util": {
         "version": "1.1.2"
     },

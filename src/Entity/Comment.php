@@ -7,7 +7,10 @@ use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      itemOperations={"get"},
+ *      collectionOperations={"get"}
+ * ) 
  * @ORM\Entity(repositoryClass=CommentRepository::class)
  */
 class Comment
@@ -30,10 +33,16 @@ class Comment
     private $published;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\BlogPost", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $blogPost;
 
     public function getId(): ?int
     {
@@ -63,4 +72,45 @@ class Comment
 
         return $this;
     }
+
+    /**
+     * @return User
+     */
+
+    public function getAuthor(): User
+    {
+        return $this->author;
+    }
+
+    /**
+     * @return User $author
+     */
+
+    public function setAuthor(User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return User $author
+     */
+
+    public function getBlogPost(): BlogPost
+    {
+        return $this->blogPost;
+    }
+
+    /**
+     * @return User $author
+     */
+
+    public function setBlogPost(BlogPost $blogPost): self
+    {
+        $this->blogPost = $blogPost;
+
+        return $this;
+    }
+
 }
