@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class PasswordHashSubscriber extends EventSubscriberInterface
+class PasswordHashSubscriber implements EventSubscriberInterface
 {
 
     /**
