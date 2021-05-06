@@ -43,6 +43,10 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(min=6, max=255)
+     * @Assert\Regex(
+     *      pattern="/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{7,}/",
+     *      message="Password must be seven characters long and contain at least seven charaters long..."
+     * )
      */
     private $password;
 
